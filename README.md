@@ -46,6 +46,33 @@ We will use the RedisTemplate instance template opsForValue() method to get an i
 
 evega@Esthers-MacBook-Pro redi2read (main) $ redis-cli MONITOR
 
+Let’s test the RoleRepository by using a CommandLineRunner implementation. A Spring CommandLineRunner is an interface that tells the Spring container that the run method needs to be executed upon startup.
+
+
+127.0.0.1:6379> KEYS com.redislabs.edu.redi2read.models.Role*
+1) "com.redislabs.edu.redi2read.models.Role"
+2) "com.redislabs.edu.redi2read.models.Role:8b2ecb12-531a-4500-9143-f9b13eab07d2"
+3) "com.redislabs.edu.redi2read.models.Role:d87db9a1-8714-4c01-bacd-345ee679166f"
+1
+
+
+127.0.0.1:6379> HGETALL "com.redislabs.edu.redi2read.models.Role:d87db9a1-8714-4c01-bacd-345ee679166f"
+1) "_class"
+2) "com.redislabs.edu.redi2read.models.Role"
+3) "id"
+4) "d87db9a1-8714-4c01-bacd-345ee679166f"
+5) "name"
+6) "customer"
+
+127.0.0.1:6379> TYPE "com.redislabs.edu.redi2read.models.Role"
+set
+127.0.0.1:6379> SMEMBERS "com.redislabs.edu.redi2read.models.Role"
+1) "d87db9a1-8714-4c01-bacd-345ee679166f"
+2) "8b2ecb12-531a-4500-9143-f9b13eab07d2"
+
+
+
+
 
 
 

@@ -1,5 +1,6 @@
 package com.redislabs.edu.redi2read.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -19,6 +20,7 @@ import java.util.Set;
 @ToString(onlyExplicitlyIncluded = true)
 @Data
 @RedisHash
+@JsonIgnoreProperties(value = { "password", "passwordConfirm" }, allowSetters = true)
 public class User {
 
     @Id

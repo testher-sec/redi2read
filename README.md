@@ -71,6 +71,41 @@ set
 2) "8b2ecb12-531a-4500-9143-f9b13eab07d2"
 
 
+-------------------
+
+to index the already created Roles, we’ll need to either retrieve them and resave them or recreate them.
+
+Using the SRANDMEMBER command, we can pull a random member from a Set. We then use that and the User Hashes prefix to retrieve the data for a random User hash.
+
+127.0.0.1:6379> TYPE "com.redislabs.edu.redi2read.models.User"
+set
+127.0.0.1:6379> SCARD "com.redislabs.edu.redi2read.models.User"
+(integer) 1001
+
+127.0.0.1:6379> HGETALL "com.redislabs.edu.redi2read.models.User:-1848761758049653394"
+ 1) "email"
+ 2) "janice.garza@example.com"
+ 3) "id"
+ 4) "-1848761758049653394"
+ 5) "name"
+ 6) "Janice Garza"
+ 7) "_class"
+ 8) "com.redislabs.edu.redi2read.models.User"
+ 9) "roles.[0]"
+10) "com.redislabs.edu.redi2read.models.Role:33448108-c997-4db2-a618-b4cda5c75fc7"
+11) "password"
+12) "$2a$10$ynSrPEgx.VuegwxFQkAAJed8Tg3QKblEIM62Nea1gaF1HEZCCYIIy"
+127.0.0.1:6379> 
+
+
+127.0.0.1:6379> SRANDMEMBER "com.redislabs.edu.redi2read.models.User"
+"-2645818804787573177"
+
+
+
+
+
+
 
 
 

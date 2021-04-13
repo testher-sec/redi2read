@@ -27,4 +27,26 @@ string
 Data from ram rather than disk. It's durable, data is persisted but has a copy in ram
 Append only format. aof
 
-appendonly.aof??? 
+appendonly.aof
+
+-------------------------
+https://spring.io/projects/spring-data
+Spring Data Redis provides access to Redis from Spring applications. It offers both low-level and high-level abstractions for interacting with Redis.
+
+RedisTemplate, a class that provides a thread-safe bridge between Spring and Redis Commands
+ 
+/mvnw clean spring-boot:run
+
+
+curl --location --request POST 'http://localhost:8080/api/redis/strings' \
+ --header 'Content-Type: application/json' \
+ --data-raw '{ "database:redis:creator": "Salvatore Sanfilippo" }'
+
+We will use the RedisTemplate instance template opsForValue() method to get an instance of ValueOperations, which provides methods to execute operations performed on simple values (or Strings in Redis terminology).
+
+evega@Esthers-MacBook-Pro redi2read (main) $ redis-cli MONITOR
+
+
+
+
+

@@ -1,5 +1,6 @@
 package com.redislabs.edu.redi2read.models;
 
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -45,9 +46,22 @@ public class User {
     @Transient
     private String passwordConfirm;
 
+    /**
+     * We will add the @JsonIdentityReference with the alwaysAsId parameter set to true,
+     * which, given the proper meta-information in the target classes (Book and Role),
+     * will make Jackson serialize collections of these objects as IDs.
+     */
     @Reference
+    @JsonIdentityReference(alwaysAsId = true)
     private Set<Role> roles = new HashSet<Role>();
     public void addRole(Role role) {
         roles.add(role);
+    }
+
+    @Reference
+    @JsonIdentityReference(alwaysAsId = true)
+    private Set<Book> books = new HashSet<Book>();
+    public void addBook(Book book) {
+        books.add(book);
     }
 }

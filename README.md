@@ -102,6 +102,19 @@ set
 "-2645818804787573177"
 
 
+---------------------------
+RedisJSON is a Redis module that lets you store, update, and fetch JSON values natively in Redis. JSON can be a better fit for modeling complex data in Redis than Hashes because, unlike Hashes, JSON values can contain nested arrays and objects.
+
+JRedisJSON (https://github.com/RedisJSON/JRedisJSON) is a Java client that provides access to RedisJSON's Redis API and provides Java serialization using Google’s GSON library.
+
+127.0.0.1:6379> SRANDMEMBER "com.redislabs.edu.redi2read.models.Cart"
+"com.redislabs.edu.redi2read.models.Cart:dcd6a6c3-59d6-43b4-8750-553d159cdeb8"
+127.0.0.1:6379> TYPE "com.redislabs.edu.redi2read.models.Cart:dcd6a6c3-59d6-43b4-8750-553d159cdeb8"
+ReJSON-RL
+127.0.0.1:6379> JSON.GET "com.redislabs.edu.redi2read.models.Cart:dcd6a6c3-59d6-43b4-8750-553d159cdeb8"
+"{\"id\":\"dcd6a6c3-59d6-43b4-8750-553d159cdeb8\",\"userId\":\"-3356969291827598172\",\"cartItems\":[{\"isbn\":\"1784391093\",\"price\":17.190000000000001,\"quantity\":1},{\"isbn\":\"3662433524\",\"price\":59.990000000000002,\"quantity\":1}]}"
+
+
 
 
 

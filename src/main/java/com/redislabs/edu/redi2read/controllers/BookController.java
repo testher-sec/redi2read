@@ -4,7 +4,13 @@ import com.redislabs.edu.redi2read.models.Book;
 import com.redislabs.edu.redi2read.models.Category;
 import com.redislabs.edu.redi2read.repositories.BookRepository;
 import com.redislabs.edu.redi2read.repositories.CategoryRepository;
+import com.redislabs.lettusearch.RediSearchCommands;
+import com.redislabs.lettusearch.SearchResults;
+import com.redislabs.lettusearch.StatefulRediSearchConnection;
+import com.redislabs.lettusearch.Suggestion;
+import com.redislabs.lettusearch.SuggetOptions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -31,10 +37,13 @@ public class BookController {
     @Autowired
     private CategoryRepository categoryRepository;
 
-//    @GetMapping
-//    public Iterable<Book> all() {
-//        return bookRepository.findAll();
-//    }
+    @Value("${app.booksSearchIndexName}")
+    private String searchIndexName;
+    @Autowired
+    private StatefulRediSearchConnection<String, String> searchConnection;
+
+    @Value("${app.autoCompleteKey}")
+    private String autoCompleteKey;
 
     @GetMapping
     public ResponseEntity<Map<String, Object>> all(
@@ -61,4 +70,17 @@ public class BookController {
         return bookRepository.findById(isbn).get();
     }
 
+    @GetMapping("/search")
+    public SearchResults<String,String> search(@RequestParam(name="q")String query) {
+        RediSearchCommands<String, String> commands = searchConnection.sync();
+        SearchResults<String, String> results = commands.search(searchIndexName, query);
+        return results;
+    }
+
+    @GetMapping("/authors")
+    public List<Suggestion<String>> authorAutoComplete(@RequestParam(name="q")String query) {
+        RediSearchCommands<String, String> commands = searchConnection.sync();
+        SuggetOptions options = SuggetOptions.builder().max(20L).build();
+        return commands.sugget(autoCompleteKey, query, options);
+    }
 }
